@@ -1,0 +1,89 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from io import StringIO
+
+# Full dataset
+data = """anime_id,anime_title,genre,type,episodes,release_year,studio,age_rating,average_rating,rating_count,review_count,popularity_rank,favorites_count,status
+1,Anime Title 1,"Adventure, Action, Comedy",Movie,29,1999,Ufotable,G,8.45,17163,2002,1,99246,Ongoing
+2,Anime Title 2,"Romance, Slice of Life, Sci-Fi",Movie,58,2013,Toei Animation,G,9,84207,45803,2,444143,Ongoing
+3,Anime Title 3,Drama,TV,12,2007,Ufotable,PG-13,9.3,317026,17385,3,847335,Ongoing
+4,Anime Title 4,"Adventure, Slice of Life",OVA,81,2014,A-1 Pictures,PG,8.83,24525,43386,4,239968,Ongoing
+5,Anime Title 5,Sci-Fi,OVA,59,2015,A-1 Pictures,PG,7.72,110342,43970,5,280946,Ongoing
+6,Anime Title 6,Horror,Special,35,2024,Madhouse,PG-13,9.28,407347,3715,6,241174,Completed
+7,Anime Title 7,"Adventure, Romance",OVA,28,2015,Wit Studio,R,9.42,337539,30121,7,150811,Ongoing
+8,Anime Title 8,"Slice of Life, Sports, Comedy",Special,75,2007,A-1 Pictures,PG,9.79,73025,33442,8,518488,Ongoing
+9,Anime Title 9,Fantasy,Special,77,1997,Kyoto Animation,R,8.47,245892,34726,9,264626,Completed
+10,Anime Title 10,"Drama, Adventure, Comedy",Special,21,2009,MAPPA,PG-13,9.71,399987,11758,10,533342,Ongoing
+11,Anime Title 11,Drama,Movie,70,2025,MAPPA,PG-13,8.11,59150,23838,11,922406,Ongoing
+12,Anime Title 12,Sports,TV,11,2018,Wit Studio,G,9.73,279791,8291,12,135628,Completed
+13,Anime Title 13,"Sports, Sci-Fi, Romance",Movie,92,2004,Kyoto Animation,PG-13,7.95,271858,29638,13,127882,Ongoing
+14,Anime Title 14,"Action, Slice of Life",Movie,76,2002,MAPPA,G,8.84,31366,15053,14,71674,Ongoing
+15,Anime Title 15,"Romance, Comedy, Horror",Movie,70,1999,Wit Studio,PG,9.09,423860,26727,15,200659,Completed
+16,Anime Title 16,"Sci-Fi, Sports",Special,94,1996,Ufotable,G,7.83,178392,7211,16,261735,Completed
+17,Anime Title 17,Sci-Fi,Movie,36,2009,Madhouse,G,7.96,452094,36116,17,103664,Ongoing
+18,Anime Title 18,Fantasy,Special,63,2010,Madhouse,R,9.48,86817,24886,18,3260,Completed
+19,Anime Title 19,"Sci-Fi, Slice of Life",Special,20,2001,Toei Animation,PG,9.7,304157,48267,19,569532,Ongoing
+20,Anime Title 20,Sports,Special,65,2024,Bones,G,9.67,42501,12228,20,72849,Completed
+21,Anime Title 21,Sports,Movie,75,2014,MAPPA,G,7.88,306512,37092,21,549177,Ongoing
+22,Anime Title 22,"Drama, Romance, Comedy",Special,17,2016,Toei Animation,R,7.54,394693,4804,22,10767,Ongoing
+23,Anime Title 23,"Romance, Slice of Life, Comedy",Movie,45,2023,Ufotable,PG,7.72,83204,28766,23,875244,Completed
+24,Anime Title 24,"Adventure, Fantasy, Comedy",TV,14,2018,Bones,PG-13,7.43,110930,47079,24,360536,Completed
+25,Anime Title 25,"Action, Adventure",Special,36,1996,MAPPA,PG-13,9.04,334530,17217,25,170430,Ongoing
+26,Anime Title 26,Adventure,Movie,70,1996,A-1 Pictures,PG,7.92,22430,20252,26,383364,Ongoing
+27,Anime Title 27,"Romance, Adventure, Drama",Special,80,2018,Bones,PG,9.35,419871,11653,27,925231,Ongoing
+28,Anime Title 28,"Drama, Sci-Fi, Romance",OVA,21,2020,Ufotable,R,9.38,450650,30897,28,234238,Completed
+29,Anime Title 29,"Romance, Sports",TV,85,2001,Kyoto Animation,PG-13,7.42,36896,18342,29,369203,Ongoing
+30,Anime Title 30,Comedy,Movie,75,2025,Toei Animation,G,6.86,228336,22704,30,764934,Ongoing
+"""
+
+df = pd.read_csv(StringIO(data))
+
+#BAR GRAPH
+
+plt.figure(figsize=(12,6))
+plt.bar(df['anime_title'], df['average_rating'], color='skyblue')
+plt.title("Average Rating of All Anime")
+plt.xlabel("Anime Title")
+plt.ylabel("Average Rating")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.grid(True)
+plt.show()
+
+
+#LINE CHART 
+
+plt.figure(figsize=(10,5))
+plt.plot(df['anime_id'], df['average_rating'], marker='o', color='green')
+plt.title("Rating Trend Across Anime IDs")
+plt.xlabel("Anime ID")
+plt.ylabel("Average Rating")
+plt.grid()
+plt.show()
+
+#PIE CHART 
+
+type_counts = df['type'].value_counts()
+
+plt.figure(figsize=(6,6))
+plt.pie(type_counts, labels=type_counts.index, autopct='%1.1f%%')
+plt.title("Anime Type Distribution")
+plt.show()
+
+#HISTOGRAM 
+
+plt.figure(figsize=(8,5))
+plt.hist(df['average_rating'], bins=10, color='purple', edgecolor='black')
+plt.title("Distribution of Ratings")
+plt.xlabel("Average Rating")
+plt.ylabel("Frequency")
+plt.show()
+
+#Stair chart
+plt.figure(figsize=(10,5))
+plt.step(df['anime_id'], df['average_rating'], where='mid', color='red')
+plt.title("Stair Chart of Ratings Across Anime IDs")
+plt.xlabel("Anime ID")
+plt.ylabel("Average Rating")
+plt.grid()
+plt.show()
